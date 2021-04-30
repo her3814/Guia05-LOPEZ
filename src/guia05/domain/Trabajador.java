@@ -1,9 +1,11 @@
 package guia05.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import guia05.exceptions.AgendaOcupadaException;
 import guia05.exceptions.OficioNoCoincideException;
+import guia05.infrastructure.Utils;
 
 public class Trabajador {
 	private String nombre;
@@ -18,6 +20,7 @@ public class Trabajador {
 		this.nombre = nombre;
 		this.correoElectronico = correo;
 		this.oficio = oficio;
+		this.trabajosAsignados = new ArrayList<Trabajo>();
 	}
 
 	public void asignarTrabajo(Trabajo trabajo) throws OficioNoCoincideException, AgendaOcupadaException {
@@ -27,8 +30,8 @@ public class Trabajador {
 
 		// Busco que el trabajador no tenga un trabajo que inicie el mismo dia que se
 		// desea, inicie la solicitud de trabajo a sumar
-		Boolean estaOcupado = this.trabajosAsignados.stream()
-				.anyMatch(t -> t.getFechaInicio().equals(trabajo.getFechaInicio()));
+		Boolean estaOcupado = this.trabajosAsignados.stream().anyMatch(t -> Utils
+				.InstantToDateString(t.getFechaInicio()).equals(Utils.InstantToDateString(trabajo.getFechaInicio())));
 
 		if (!estaOcupado) {
 			this.trabajosAsignados.add(trabajo);
@@ -39,6 +42,10 @@ public class Trabajador {
 
 	public String toString() {
 		return String.format("Trabajador: %s (%s). Oficio: %s", nombre, correoElectronico, oficio.getNombre());
+	}
+
+	public Oficio getOficio() {
+		return oficio;
 	}
 
 	public void printListaTrabajosAsignados() {

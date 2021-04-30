@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import guia05.domain.*;
+import guia05.exceptions.AgendaOcupadaException;
 import guia05.exceptions.AlquilerNoEntregadoException;
+import guia05.exceptions.OficioNoCoincideException;
 
 public class App {
 
@@ -33,9 +36,10 @@ public class App {
 		CargarServicios();
 
 		SimularPunto5();
+		SimularPunto7();
 		SimularPunto8_9();
 	}
-	
+
 	private static void SimularPunto5() {
 
 		printMensajeSimulacion(5);
@@ -47,8 +51,54 @@ public class App {
 
 		julian.contratar(new Alquiler(herramientas.get(1), ChronoUnit.DAYS.addTo(Instant.now(), -2),
 				ChronoUnit.DAYS.addTo(Instant.now(), -1)));
-		
+
 		julian.printDetalleAlquileres();
+
+	}
+
+	private static void SimularPunto7() {
+
+		printMensajeSimulacion(7);
+		Usuario usuario = usuarios.get(3);
+
+		Trabajador trabajadorA = trabajadores.get(1);
+		Oficio oficioA = trabajadorA.getOficio();
+		ServicioEstandar servicioA = new ServicioEstandar(oficioA, 150.0, TipoComision.PORCENTUAL, 0.5);
+
+		Trabajador trabajadorB = trabajadores.get(3);
+		List<Oficio> oficiosNoB = new ArrayList<Oficio>(oficios);
+		oficiosNoB.remove(trabajadorB.getOficio());
+		Oficio oficioNoB = oficiosNoB.get(0);
+		ServicioEstandar servicioB = new ServicioEstandar(oficioNoB, 300.0, TipoComision.PORCENTUAL, 1.1);
+
+		// Contratacion normal
+		try {
+			usuario.contratar(new Trabajo(trabajadorA, servicioA, false, ChronoUnit.DAYS.addTo(Instant.now(), -1)));
+		} catch (OficioNoCoincideException e) {
+			System.out.println(e.getMessage());
+		} catch (AgendaOcupadaException e) {
+			System.out.println(e.getMessage());
+		}
+
+		// Contratacion oficio no coincide
+		try {
+			usuario.contratar(new Trabajo(trabajadorB, servicioB, false, ChronoUnit.DAYS.addTo(Instant.now(), 1)));
+		} catch (OficioNoCoincideException e) {
+			System.out.println(e.getMessage());
+		} catch (AgendaOcupadaException e) {
+			System.out.println(e.getMessage());
+		}
+
+		// Contratacion agenda ocupada
+		try {
+			usuario.contratar(new Trabajo(trabajadorA, new ServicioPersonalizado(oficioA, 200.00, 50.00, 100.00), false,
+					ChronoUnit.DAYS.addTo(Instant.now(), -1)));
+
+		} catch (OficioNoCoincideException e) {
+			System.out.println(e.getMessage());
+		} catch (AgendaOcupadaException e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 
