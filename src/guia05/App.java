@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 import guia05.domain.*;
 import guia05.exceptions.AgendaOcupadaException;
@@ -36,6 +35,7 @@ public class App {
 		CargarServicios();
 
 		SimularPunto5();
+		SimularPunto6();
 		SimularPunto7();
 		SimularPunto8_9();
 	}
@@ -54,6 +54,30 @@ public class App {
 
 		julian.printDetalleAlquileres();
 
+	}
+
+	private static void SimularPunto6() {
+
+		printMensajeSimulacion(6);
+		Usuario usuario = usuarios.get(4);
+
+		usuario.contratar(new Alquiler(herramientas.get(3), ChronoUnit.DAYS.addTo(Instant.now(), -2),
+				ChronoUnit.DAYS.addTo(Instant.now(), 2)));
+
+		usuario.contratar(new Alquiler(herramientas.get(2), ChronoUnit.DAYS.addTo(Instant.now(), -2),
+				ChronoUnit.DAYS.addTo(Instant.now(), 2)));
+				
+		Trabajador trabajadorA = trabajadores.get(4);
+		Oficio oficioA = trabajadorA.getOficio();
+
+		ServicioEstandar servicioA = new ServicioEstandar(oficioA, 150.0, TipoComision.PORCENTUAL, 0.5);
+		ServicioPersonalizado servicioB = new ServicioPersonalizado(oficioA, 100.0, 200.0, 30.0);
+
+		usuario.contratar(new Trabajo(trabajadorA, servicioA, true, ChronoUnit.DAYS.addTo(Instant.now(), -5),
+				ChronoUnit.DAYS.addTo(Instant.now(), -3)));
+		usuario.contratar(new Trabajo(trabajadorA, servicioB, false, ChronoUnit.DAYS.addTo(Instant.now(), 1)));
+
+		usuario.printDetalleContratos();
 	}
 
 	private static void SimularPunto7() {

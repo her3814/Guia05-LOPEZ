@@ -48,18 +48,21 @@ public class Usuario {
 		});
 	}
 
+
 	public void printDetalleContratos() {
 		this.contratosRealizados.stream().forEach(c -> {
-			
-				c.printDetalle();
+
+			c.printDetalle();
 		});
 	}
+
 	public void printDetalleTrabajos() {
 		this.contratosRealizados.stream().forEach(c -> {
 			if (c instanceof Trabajo)
 				c.printDetalle();
 		});
 	}
+
 	public void listarContratadoPendientes() {
 		this.contratosRealizados.stream().filter(c -> !c.finalizado()).forEach(c -> System.out.println(c.toString()));
 	}

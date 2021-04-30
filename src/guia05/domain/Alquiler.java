@@ -33,11 +33,19 @@ public class Alquiler implements Contratable {
 				: ChronoUnit.DAYS.between(this.fechaInicio, Instant.now());
 	}
 
+	public void devolver() {
+		this.fechaDevolucion = Instant.now();
+	}
+	
 	public Boolean enMora() {
 		if (this.fechaDevolucion != null) {
 			return this.fechaDevolucion.isAfter(fechaFinAcordada);
 		} else
 			return this.fechaFinAcordada.isBefore(Instant.now());
+	}
+
+	public Herramienta getHerramientaAlquilada() {
+		return herramienta;
 	}
 
 	@Override
@@ -50,8 +58,9 @@ public class Alquiler implements Contratable {
 		System.out.println("\n" + herramienta.toString());
 		System.out.println("\tFecha Inicio:" + Utils.InstantToDateString(fechaInicio));
 		System.out.println("\tFecha Finalización Acordada:" + Utils.InstantToDateString(fechaFinAcordada));
-		System.out.println("\tFecha de devolución:" + (fechaDevolucion!=null ? Utils.InstantToDateString(fechaDevolucion) : "SIN DEVOLVER"));
-		System.out.println("\tEn mora:" + enMora());		
+		System.out.println("\tFecha de devolución:"
+				+ (fechaDevolucion != null ? Utils.InstantToDateString(fechaDevolucion) : "SIN DEVOLVER"));
+		System.out.println("\tEn mora:" + enMora());
 		System.out.println("\tCosto: " + costo() + "\n");
 	}
 

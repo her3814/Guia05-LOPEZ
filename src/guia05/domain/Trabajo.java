@@ -74,6 +74,7 @@ public class Trabajo implements Contratable {
 		System.out.println("\n" + servicio.toString());
 		System.out.println("A realizar por: " + trabajador.getNombre());
 		System.out.println(urgente ? "URGENTE" : "SIN URGENCIA");
+		System.out.println(finalizado() ? "finalizado" : "SIN finalizar");
 		System.out.println("Costo: " + costo() + "\n");
 
 	}
