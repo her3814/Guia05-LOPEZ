@@ -7,12 +7,13 @@ public class Herramienta {
 
 	public Herramienta(String nombre, Double costoPorDia) {
 		this.nombre = nombre;
-		this.costoPorDia=costoPorDia;
+		this.costoPorDia = costoPorDia;
 	}
-	
+
 	public Double getCostoDiario() {
 		return this.costoPorDia;
 	}
+
 	@Override
 	public String toString() {
 		return "Herramienta: " + this.nombre;

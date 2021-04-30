@@ -12,11 +12,15 @@ public class Usuario {
 	private String email;
 	private List<Contratable> contratosRealizados;
 
-	public void constructor(String email) {
+	public Usuario(String email) {
 		this.email = email;
 		this.contratosRealizados = new ArrayList<Contratable>();
 	}
 
+	public String getEmail() {
+		return email;
+	}
+	
 	public void contratar(Trabajo trabajo) throws OficioNoCoincideException, AgendaOcupadaException {
 		try {
 			trabajo.trabajador.asignarTrabajo(trabajo);
@@ -38,5 +42,27 @@ public class Usuario {
 
 	public void ListarContratadoPendientes() {
 		this.contratosRealizados.stream().filter(c -> !c.finalizado()).forEach(c -> c.toString()); 
+	}
+	
+	@Override
+	public String toString() {
+		return "Usuario: " + email;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (email == null) {
+			if (other.getEmail() != null)
+				return false;
+		} else if (!email.equals(other.getEmail()))
+			return false;
+		return true;
 	}
 }
