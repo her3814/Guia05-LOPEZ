@@ -2,12 +2,18 @@ package guia05.domain;
 
 public class ServicioEstandar implements Servicio {
 
-	private Double costoFijo;
+	private Double costoFijo;	
+	private Double comisionProfesional;
+
+	private TipoComision TipoComision;
+
 	private Oficio oficio;
 
-	public void constructor(Oficio oficio, Double costoFijo) {
+	public void constructor(Oficio oficio, Double costoFijo, TipoComision tipoComision, Double comisionProfesional) {
 		this.costoFijo = costoFijo;
 		this.oficio = oficio;
+		this.TipoComision=tipoComision;
+		this.comisionProfesional=comisionProfesional;
 	}
 
 	@Override
@@ -22,8 +28,15 @@ public class ServicioEstandar implements Servicio {
 
 	@Override
 	public Double Costo() {
-		// TODO Auto-generated method stub
-		return this.costoFijo;
+		switch (this.TipoComision) {
+		case MONTO_FIJO:
+			return this.costoFijo + this.comisionProfesional;
+		case PORCENTUAL:
+			return this.costoFijo * (1 + this.comisionProfesional);
+		default:
+			return this.costoFijo;
+		}
+
 	}
 
 }

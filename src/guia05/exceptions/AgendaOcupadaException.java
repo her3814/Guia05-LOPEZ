@@ -5,9 +5,8 @@ import guia05.domain.Trabajo;
 import guia05.infrastructure.Utils;
 
 public class AgendaOcupadaException extends RuntimeException {
-
 	/**
-	 * 
+	 * Agregado por recomendación de IDE Eclipse
 	 */
 	private static final long serialVersionUID = -1940310981460032408L;
 

@@ -16,8 +16,9 @@ import guia05.domain.Oficio;
 * @since   2014-03-31
 */
 public class OficioNoCoincideException extends RuntimeException {
-	
-	   /**Agregado por recomendación del IDE Eclipse*/
+	/**
+	 * Agregado por recomendación de IDE Eclipse
+	 */
 	private static final long serialVersionUID = 4472827032563322863L;
 
 	public OficioNoCoincideException(Oficio oficioTrabajador, Oficio oficioServicio) {

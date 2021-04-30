@@ -50,7 +50,7 @@ public class Trabajo implements Contratable {
 		return this.fechaInicio;
 	}
 	
-	public void TrabajoFinalizado() {
+	public void marcarFinalizado() {
 		if(this.fechaFin==null)
 			this.fechaFin= Instant.now();
 		else throw new TrabajoFinalizadoException(this);
@@ -58,12 +58,12 @@ public class Trabajo implements Contratable {
 	
 	public Double costo() {
 		return urgente ? 
-				(this.trabajador.getComision() + this.servicio.Costo()) * 1.5 
-				: this.trabajador.getComision() + this.servicio.Costo();
+				this.servicio.Costo()*1.5 : this.servicio.Costo();
 	}
 
+	@Override
 	public Boolean finalizado() {
-		return null;
+		return this.fechaFin!= null;
 	}
 	
 	@Override

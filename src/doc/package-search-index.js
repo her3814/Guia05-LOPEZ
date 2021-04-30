@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"guia05"},{"l":"guia05.domain"},{"l":"guia05.exceptions"},{"l":"guia05.infrastructure"}];updateSearchResults();
