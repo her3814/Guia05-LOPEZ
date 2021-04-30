@@ -20,7 +20,7 @@ public class Usuario {
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void contratar(Trabajo trabajo) throws OficioNoCoincideException, AgendaOcupadaException {
 		try {
 			trabajo.trabajador.asignarTrabajo(trabajo);
@@ -33,17 +33,37 @@ public class Usuario {
 	}
 
 	public void contratar(Alquiler alquiler) throws AlquilerNoEntregadoException {
-		if (this.contratosRealizados.stream().filter(t -> t instanceof Alquiler && t.finalizado() == false).count() >= limiteAlquileres)
+		if (this.contratosRealizados.stream().filter(t -> t instanceof Alquiler && t.finalizado() == false)
+				.count() >= limiteAlquileres)
 			throw new AlquilerNoEntregadoException(this.email);
 		else
 			this.contratosRealizados.add(alquiler);
 
 	}
 
-	public void ListarContratadoPendientes() {
-		this.contratosRealizados.stream().filter(c -> !c.finalizado()).forEach(c -> c.toString()); 
+	public void printDetalleAlquileres() {
+		this.contratosRealizados.stream().forEach(c -> {
+			if (c instanceof Alquiler)
+				c.printDetalle();
+		});
 	}
-	
+
+	public void printDetalleContratos() {
+		this.contratosRealizados.stream().forEach(c -> {
+			
+				c.printDetalle();
+		});
+	}
+	public void printDetalleTrabajos() {
+		this.contratosRealizados.stream().forEach(c -> {
+			if (c instanceof Trabajo)
+				c.printDetalle();
+		});
+	}
+	public void listarContratadoPendientes() {
+		this.contratosRealizados.stream().filter(c -> !c.finalizado()).forEach(c -> System.out.println(c.toString()));
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario: " + email;

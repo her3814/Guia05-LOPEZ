@@ -6,7 +6,7 @@ public class ServicioPersonalizado implements Servicio {
 	private Double costoTransporte;
 	private Oficio oficio;
 
-	public void constructor(Oficio oficio, Double costoPresupuesto, Double costoMateriales, Double costoTransporte) {
+	public ServicioPersonalizado(Oficio oficio, Double costoPresupuesto, Double costoMateriales, Double costoTransporte) {
 		this.oficio=oficio;
 		this.montoPresupuestado = costoPresupuesto;
 		this.costoMateriales = costoMateriales;

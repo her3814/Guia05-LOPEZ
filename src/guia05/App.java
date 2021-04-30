@@ -26,38 +26,62 @@ public class App {
 		herramientas = new ArrayList<Herramienta>();
 		usuarios = new ArrayList<Usuario>();
 
-		CargarOficios(oficios);
-		CargarTrabajadores(trabajadores, oficios);
-		CargarHerramientas(herramientas);
-		CargarUsuarios(usuarios);
+		CargarOficios();
+		CargarTrabajadores();
+		CargarHerramientas();
+		CargarUsuarios();
+		CargarServicios();
+
+		SimularPunto5();
 		SimularPunto8_9();
 	}
-
 	
+	private static void SimularPunto5() {
+
+		printMensajeSimulacion(5);
+
+		var julian = usuarios.get(1);
+
+		julian.contratar(new Alquiler(herramientas.get(3), ChronoUnit.DAYS.addTo(Instant.now(), -2),
+				ChronoUnit.DAYS.addTo(Instant.now(), 2)));
+
+		julian.contratar(new Alquiler(herramientas.get(1), ChronoUnit.DAYS.addTo(Instant.now(), -2),
+				ChronoUnit.DAYS.addTo(Instant.now(), -1)));
+		
+		julian.printDetalleAlquileres();
+
+	}
+
+	private static void printMensajeSimulacion(int i) {
+		System.out.println("\n\n-------- Simulando ejercicio " + i + " --------\n\n");
+	}
+
 	private static void SimularPunto8_9() {
+
+		printMensajeSimulacion(8);
+
 		var hernan = usuarios.get(0);
-		
+
 		ChronoUnit.DAYS.addTo(Instant.now(), -2);
-		
-		try {			
+
+		try {
 			hernan.contratar(new Alquiler(herramientas.get(2), ChronoUnit.DAYS.addTo(Instant.now(), -2),
 					ChronoUnit.DAYS.addTo(Instant.now(), 2)));
-			System.out.println("Se alquilo " + herramientas.get(2).toString() );
-			
+			System.out.println("Se alquilo " + herramientas.get(2).toString());
+
 			hernan.contratar(new Alquiler(herramientas.get(0), ChronoUnit.DAYS.addTo(Instant.now(), -2),
 					ChronoUnit.DAYS.addTo(Instant.now(), 2)));
-			System.out.println("Se alquilo " + herramientas.get(0).toString() );
-			
+			System.out.println("Se alquilo " + herramientas.get(0).toString());
+
 			hernan.contratar(new Alquiler(herramientas.get(1), ChronoUnit.DAYS.addTo(Instant.now(), -2),
-					ChronoUnit.DAYS.addTo(Instant.now(), 2)));		
-			System.out.println("Se alquilo " + herramientas.get(1).toString() );	
-		}
-		catch (AlquilerNoEntregadoException e) {
+					ChronoUnit.DAYS.addTo(Instant.now(), 2)));
+			System.out.println("Se alquilo " + herramientas.get(1).toString());
+		} catch (AlquilerNoEntregadoException e) {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	private static void CargarUsuarios(List<Usuario> usuarios) {
+
+	private static void CargarUsuarios() {
 		usuarios.add(new Usuario("hernan@mail.com"));
 		usuarios.add(new Usuario("julian@mail.com"));
 		usuarios.add(new Usuario("melisa@mail.com"));
@@ -65,7 +89,7 @@ public class App {
 		usuarios.add(new Usuario("mario@mail.com"));
 	}
 
-	private static void CargarOficios(List<Oficio> oficios) {
+	private static void CargarOficios() {
 		String[] nombres = { "Albañil", "Carpintero", "Herrero", "Anabella", "Cerrajero" };
 
 		Arrays.asList(nombres).forEach((o) -> {
@@ -73,14 +97,19 @@ public class App {
 		});
 	}
 
-	private static void CargarHerramientas(List<Herramienta> herramientas) {
+	private static void CargarServicios() {
+		servicios.add(new ServicioEstandar(oficios.get(0), 300.00, TipoComision.PORCENTUAL, 0.8));
+		servicios.add(new ServicioEstandar(oficios.get(2), 2000.00, TipoComision.MONTO_FIJO, 150.0));
+	}
+
+	private static void CargarHerramientas() {
 		herramientas.add(new Herramienta("Cortadora de Pasto", 150.00));
 		herramientas.add(new Herramienta("Martillo electrico", 350.00));
 		herramientas.add(new Herramienta("Remachadora", 75.00));
 		herramientas.add(new Herramienta("Taladro", 60.00));
 	}
 
-	private static void CargarTrabajadores(List<Trabajador> trabajadores, List<Oficio> oficios) {
+	private static void CargarTrabajadores() {
 		var random = new Random(Instant.now().getEpochSecond());
 
 		String[] nombres = { "Ernesto", "Marina", "Armando", "Anabella", "Mario" };

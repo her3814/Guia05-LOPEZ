@@ -9,7 +9,7 @@ public class ServicioEstandar implements Servicio {
 
 	private Oficio oficio;
 
-	public void constructor(Oficio oficio, Double costoFijo, TipoComision tipoComision, Double comisionProfesional) {
+	public ServicioEstandar(Oficio oficio, Double costoFijo, TipoComision tipoComision, Double comisionProfesional) {
 		this.costoFijo = costoFijo;
 		this.oficio = oficio;
 		this.TipoComision=tipoComision;
